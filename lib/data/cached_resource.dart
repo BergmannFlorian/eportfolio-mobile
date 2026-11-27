@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show FileSystemException;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -102,7 +103,14 @@ mixin CachedResource<T> {
       throw InvalidResponseException(error);
     }
     final fetchedAt = now();
-    await cache.write(_cacheKey(lang), CacheEntry(json: json, fetchedAt: fetchedAt));
+    try {
+      await cache.write(
+        _cacheKey(lang),
+        CacheEntry(json: json, fetchedAt: fetchedAt),
+      );
+    } on FileSystemException {
+      // The data is valid even if it could not be cached (disk full…).
+    }
     if (ref.mounted) await ref.read(lastSyncProvider.notifier).mark(fetchedAt);
     return Cached(data: data, fetchedAt: fetchedAt);
   }

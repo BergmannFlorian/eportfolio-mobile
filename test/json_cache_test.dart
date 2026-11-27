@@ -37,6 +37,15 @@ void main() {
     expect((await cache.read('en/skills'))!.json, 'en');
   });
 
+  test('concurrent writes of the same key do not collide', () async {
+    final at = DateTime.utc(2026);
+    await Future.wait([
+      for (var i = 0; i < 10; i++)
+        cache.write('fr/projects', CacheEntry(json: i, fetchedAt: at)),
+    ]);
+    expect((await cache.read('fr/projects'))!.json, isA<int>());
+  });
+
   test('a corrupt file is treated as a miss', () async {
     File('${dir.path}/fr_profile.json').writeAsStringSync('{not json');
     expect(await cache.read('fr/profile'), isNull);

@@ -47,8 +47,11 @@ class JsonCache {
       'fetchedAt': entry.fetchedAt.toUtc().toIso8601String(),
       'body': entry.json,
     });
-    // Write then rename, so a crash never leaves a half-written file.
-    final tmp = File('${file.path}.tmp');
+    // Write then rename, so a crash never leaves a half-written file. The temp
+    // name is unique: two refreshes of the same resource can overlap.
+    final tmp = File(
+      '${file.path}.${DateTime.now().microsecondsSinceEpoch}.$hashCode.tmp',
+    );
     await tmp.writeAsString(payload, flush: true);
     await tmp.rename(file.path);
   }
