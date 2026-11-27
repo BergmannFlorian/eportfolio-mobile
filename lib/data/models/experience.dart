@@ -16,6 +16,9 @@ abstract class ApiExperience with _$ApiExperience {
     required String title,
     String? degree,
     String? organization,
+
+    /// Company or school logo, uncropped (PNG/WebP or SVG). Site-relative path.
+    String? organizationLogo,
     required DateTime start,
 
     /// `null` means the experience is ongoing.

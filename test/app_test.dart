@@ -59,7 +59,7 @@ void main() {
 
     await tester.tap(find.text('Projets'));
     await load(tester);
-    expect(find.text('PERSONNELS  3'), findsOneWidget);
+    expect(find.text('PERSONNELS  4'), findsOneWidget);
 
     await tester.tap(find.textContaining('ENTREPRISE'));
     await tester.pumpAndSettle();

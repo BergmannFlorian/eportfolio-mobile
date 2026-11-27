@@ -12,6 +12,7 @@ import '../refresh.dart';
 import '../theme/app_theme.dart';
 import '../widgets/chrome.dart';
 import '../widgets/common.dart';
+import '../widgets/media_image.dart';
 import '../widgets/resource_view.dart';
 import '../widgets/segmented.dart';
 
@@ -143,15 +144,36 @@ class _TimelineItem extends StatelessWidget {
                             MonoBadge(experienceKindLabel(l10n, e.kind)),
                           ],
                         ),
-                        const SizedBox(height: 6),
-                        Text(e.title, style: AppText.heading(c.fgStrong)),
-                        if (subtitle != null) ...[
-                          const SizedBox(height: 4),
-                          Text(
-                            subtitle,
-                            style: AppText.body(c.fgMuted, size: 14),
-                          ),
-                        ],
+                        const SizedBox(height: 8),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    e.title,
+                                    style: AppText.heading(c.fgStrong),
+                                  ),
+                                  if (subtitle != null) ...[
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      subtitle,
+                                      style: AppText.body(c.fgMuted, size: 14),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            // Fixed-size box: safe inside IntrinsicHeight.
+                            OrgLogo(
+                              path: e.organizationLogo,
+                              name: e.organization ?? e.title,
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

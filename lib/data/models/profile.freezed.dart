@@ -16,7 +16,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ApiProfile {
 
- String get name; String get email; String get city; int get age; String get headline; String get bio; String get about; String get title; List<Social> get socials; List<Fact> get facts; List<SpokenLanguage> get languages; List<Hobby> get hobbies;
+ String get name; String get email; String get city; int get age; String get headline; String get bio; String get about; String get title;/// Portrait, cropped 4:5. `url` is a site-relative `/media/…` path.
+ ProfilePhoto? get photo; List<Social> get socials; List<Fact> get facts; List<SpokenLanguage> get languages; List<Hobby> get hobbies;
 /// Create a copy of ApiProfile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +31,20 @@ $ApiProfileCopyWith<ApiProfile> get copyWith => _$ApiProfileCopyWithImpl<ApiProf
 @override
 bool operator ==(Object other) {
   final _this = this as ApiProfile;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiProfile&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.city, _this.city) || other.city == _this.city)&&(identical(other.age, _this.age) || other.age == _this.age)&&(identical(other.headline, _this.headline) || other.headline == _this.headline)&&(identical(other.bio, _this.bio) || other.bio == _this.bio)&&(identical(other.about, _this.about) || other.about == _this.about)&&(identical(other.title, _this.title) || other.title == _this.title)&&const DeepCollectionEquality().equals(other.socials, _this.socials)&&const DeepCollectionEquality().equals(other.facts, _this.facts)&&const DeepCollectionEquality().equals(other.languages, _this.languages)&&const DeepCollectionEquality().equals(other.hobbies, _this.hobbies));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiProfile&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.city, _this.city) || other.city == _this.city)&&(identical(other.age, _this.age) || other.age == _this.age)&&(identical(other.headline, _this.headline) || other.headline == _this.headline)&&(identical(other.bio, _this.bio) || other.bio == _this.bio)&&(identical(other.about, _this.about) || other.about == _this.about)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.photo, _this.photo) || other.photo == _this.photo)&&const DeepCollectionEquality().equals(other.socials, _this.socials)&&const DeepCollectionEquality().equals(other.facts, _this.facts)&&const DeepCollectionEquality().equals(other.languages, _this.languages)&&const DeepCollectionEquality().equals(other.hobbies, _this.hobbies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as ApiProfile;
-  return Object.hash(runtimeType,_this.name,_this.email,_this.city,_this.age,_this.headline,_this.bio,_this.about,_this.title,const DeepCollectionEquality().hash(_this.socials),const DeepCollectionEquality().hash(_this.facts),const DeepCollectionEquality().hash(_this.languages),const DeepCollectionEquality().hash(_this.hobbies));
+  return Object.hash(runtimeType,_this.name,_this.email,_this.city,_this.age,_this.headline,_this.bio,_this.about,_this.title,_this.photo,const DeepCollectionEquality().hash(_this.socials),const DeepCollectionEquality().hash(_this.facts),const DeepCollectionEquality().hash(_this.languages),const DeepCollectionEquality().hash(_this.hobbies));
 }
 
 @override
 String toString() {
   final _this = this as ApiProfile;
-  return 'ApiProfile(name: ${_this.name}, email: ${_this.email}, city: ${_this.city}, age: ${_this.age}, headline: ${_this.headline}, bio: ${_this.bio}, about: ${_this.about}, title: ${_this.title}, socials: ${_this.socials}, facts: ${_this.facts}, languages: ${_this.languages}, hobbies: ${_this.hobbies})';
+  return 'ApiProfile(name: ${_this.name}, email: ${_this.email}, city: ${_this.city}, age: ${_this.age}, headline: ${_this.headline}, bio: ${_this.bio}, about: ${_this.about}, title: ${_this.title}, photo: ${_this.photo}, socials: ${_this.socials}, facts: ${_this.facts}, languages: ${_this.languages}, hobbies: ${_this.hobbies})';
 }
 
 
@@ -54,11 +55,11 @@ abstract mixin class $ApiProfileCopyWith<$Res>  {
   factory $ApiProfileCopyWith(ApiProfile value, $Res Function(ApiProfile) _then) = _$ApiProfileCopyWithImpl;
 @useResult
 $Res call({
- String name, String email, String city, int age, String headline, String bio, String about, String title, List<Social> socials, List<Fact> facts, List<SpokenLanguage> languages, List<Hobby> hobbies
+ String name, String email, String city, int age, String headline, String bio, String about, String title, ProfilePhoto? photo, List<Social> socials, List<Fact> facts, List<SpokenLanguage> languages, List<Hobby> hobbies
 });
 
 
-
+$ProfilePhotoCopyWith<$Res>? get photo;
 
 }
 /// @nodoc
@@ -71,7 +72,7 @@ class _$ApiProfileCopyWithImpl<$Res>
 
 /// Create a copy of ApiProfile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? email = null,Object? city = null,Object? age = null,Object? headline = null,Object? bio = null,Object? about = null,Object? title = null,Object? socials = null,Object? facts = null,Object? languages = null,Object? hobbies = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? email = null,Object? city = null,Object? age = null,Object? headline = null,Object? bio = null,Object? about = null,Object? title = null,Object? photo = freezed,Object? socials = null,Object? facts = null,Object? languages = null,Object? hobbies = null,}) {
   return _then(ApiProfile(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -81,14 +82,27 @@ as int,headline: null == headline ? _self.headline : headline // ignore: cast_nu
 as String,bio: null == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
 as String,about: null == about ? _self.about : about // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,socials: null == socials ? _self.socials : socials // ignore: cast_nullable_to_non_nullable
+as String,photo: freezed == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
+as ProfilePhoto?,socials: null == socials ? _self.socials : socials // ignore: cast_nullable_to_non_nullable
 as List<Social>,facts: null == facts ? _self.facts : facts // ignore: cast_nullable_to_non_nullable
 as List<Fact>,languages: null == languages ? _self.languages : languages // ignore: cast_nullable_to_non_nullable
 as List<SpokenLanguage>,hobbies: null == hobbies ? _self.hobbies : hobbies // ignore: cast_nullable_to_non_nullable
 as List<Hobby>,
   ));
 }
+/// Create a copy of ApiProfile
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ProfilePhotoCopyWith<$Res>? get photo {
+    if (_self.photo == null) {
+    return null;
+  }
 
+  return $ProfilePhotoCopyWith<$Res>(_self.photo!, (value) {
+    return _then(_self.copyWith(photo: value));
+  });
+}
 }
 
 
@@ -170,10 +184,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String email,  String city,  int age,  String headline,  String bio,  String about,  String title,  List<Social> socials,  List<Fact> facts,  List<SpokenLanguage> languages,  List<Hobby> hobbies)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String email,  String city,  int age,  String headline,  String bio,  String about,  String title,  ProfilePhoto? photo,  List<Social> socials,  List<Fact> facts,  List<SpokenLanguage> languages,  List<Hobby> hobbies)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ApiProfile() when $default != null:
-return $default(_that.name,_that.email,_that.city,_that.age,_that.headline,_that.bio,_that.about,_that.title,_that.socials,_that.facts,_that.languages,_that.hobbies);case _:
+return $default(_that.name,_that.email,_that.city,_that.age,_that.headline,_that.bio,_that.about,_that.title,_that.photo,_that.socials,_that.facts,_that.languages,_that.hobbies);case _:
   return orElse();
 
 }
@@ -191,10 +205,10 @@ return $default(_that.name,_that.email,_that.city,_that.age,_that.headline,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String email,  String city,  int age,  String headline,  String bio,  String about,  String title,  List<Social> socials,  List<Fact> facts,  List<SpokenLanguage> languages,  List<Hobby> hobbies)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String email,  String city,  int age,  String headline,  String bio,  String about,  String title,  ProfilePhoto? photo,  List<Social> socials,  List<Fact> facts,  List<SpokenLanguage> languages,  List<Hobby> hobbies)  $default,) {final _that = this;
 switch (_that) {
 case _ApiProfile():
-return $default(_that.name,_that.email,_that.city,_that.age,_that.headline,_that.bio,_that.about,_that.title,_that.socials,_that.facts,_that.languages,_that.hobbies);case _:
+return $default(_that.name,_that.email,_that.city,_that.age,_that.headline,_that.bio,_that.about,_that.title,_that.photo,_that.socials,_that.facts,_that.languages,_that.hobbies);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -211,10 +225,10 @@ return $default(_that.name,_that.email,_that.city,_that.age,_that.headline,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String email,  String city,  int age,  String headline,  String bio,  String about,  String title,  List<Social> socials,  List<Fact> facts,  List<SpokenLanguage> languages,  List<Hobby> hobbies)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String email,  String city,  int age,  String headline,  String bio,  String about,  String title,  ProfilePhoto? photo,  List<Social> socials,  List<Fact> facts,  List<SpokenLanguage> languages,  List<Hobby> hobbies)?  $default,) {final _that = this;
 switch (_that) {
 case _ApiProfile() when $default != null:
-return $default(_that.name,_that.email,_that.city,_that.age,_that.headline,_that.bio,_that.about,_that.title,_that.socials,_that.facts,_that.languages,_that.hobbies);case _:
+return $default(_that.name,_that.email,_that.city,_that.age,_that.headline,_that.bio,_that.about,_that.title,_that.photo,_that.socials,_that.facts,_that.languages,_that.hobbies);case _:
   return null;
 
 }
@@ -226,7 +240,7 @@ return $default(_that.name,_that.email,_that.city,_that.age,_that.headline,_that
 @JsonSerializable()
 
 class _ApiProfile implements ApiProfile {
-  const _ApiProfile({required this.name, required this.email, required this.city, required this.age, required this.headline, required this.bio, required this.about, required this.title,  List<Social> socials = const <Social>[],  List<Fact> facts = const <Fact>[],  List<SpokenLanguage> languages = const <SpokenLanguage>[],  List<Hobby> hobbies = const <Hobby>[]}): _socials = socials,_facts = facts,_languages = languages,_hobbies = hobbies;
+  const _ApiProfile({required this.name, required this.email, required this.city, required this.age, required this.headline, required this.bio, required this.about, required this.title, this.photo,  List<Social> socials = const <Social>[],  List<Fact> facts = const <Fact>[],  List<SpokenLanguage> languages = const <SpokenLanguage>[],  List<Hobby> hobbies = const <Hobby>[]}): _socials = socials,_facts = facts,_languages = languages,_hobbies = hobbies;
   factory _ApiProfile.fromJson(Map<String, dynamic> json) => _$ApiProfileFromJson(json);
 
 @override final  String name;
@@ -237,6 +251,8 @@ class _ApiProfile implements ApiProfile {
 @override final  String bio;
 @override final  String about;
 @override final  String title;
+/// Portrait, cropped 4:5. `url` is a site-relative `/media/…` path.
+@override final  ProfilePhoto? photo;
  final  List<Social> _socials;
 @override@JsonKey() List<Social> get socials {
   if (_socials is EqualUnmodifiableListView) return _socials;
@@ -279,18 +295,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiProfile&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.city, city) || other.city == city)&&(identical(other.age, age) || other.age == age)&&(identical(other.headline, headline) || other.headline == headline)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.about, about) || other.about == about)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.socials, _socials)&&const DeepCollectionEquality().equals(other.facts, _facts)&&const DeepCollectionEquality().equals(other.languages, _languages)&&const DeepCollectionEquality().equals(other.hobbies, _hobbies));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiProfile&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.city, city) || other.city == city)&&(identical(other.age, age) || other.age == age)&&(identical(other.headline, headline) || other.headline == headline)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.about, about) || other.about == about)&&(identical(other.title, title) || other.title == title)&&(identical(other.photo, photo) || other.photo == photo)&&const DeepCollectionEquality().equals(other.socials, _socials)&&const DeepCollectionEquality().equals(other.facts, _facts)&&const DeepCollectionEquality().equals(other.languages, _languages)&&const DeepCollectionEquality().equals(other.hobbies, _hobbies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,name,email,city,age,headline,bio,about,title,const DeepCollectionEquality().hash(_socials),const DeepCollectionEquality().hash(_facts),const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_hobbies));
+    return Object.hash(runtimeType,name,email,city,age,headline,bio,about,title,photo,const DeepCollectionEquality().hash(_socials),const DeepCollectionEquality().hash(_facts),const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_hobbies));
 }
 
 @override
 String toString() {
-    return 'ApiProfile(name: $name, email: $email, city: $city, age: $age, headline: $headline, bio: $bio, about: $about, title: $title, socials: $socials, facts: $facts, languages: $languages, hobbies: $hobbies)';
+    return 'ApiProfile(name: $name, email: $email, city: $city, age: $age, headline: $headline, bio: $bio, about: $about, title: $title, photo: $photo, socials: $socials, facts: $facts, languages: $languages, hobbies: $hobbies)';
 }
 
 
@@ -301,11 +317,11 @@ abstract mixin class _$ApiProfileCopyWith<$Res> implements $ApiProfileCopyWith<$
   factory _$ApiProfileCopyWith(_ApiProfile value, $Res Function(_ApiProfile) _then) = __$ApiProfileCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String email, String city, int age, String headline, String bio, String about, String title, List<Social> socials, List<Fact> facts, List<SpokenLanguage> languages, List<Hobby> hobbies
+ String name, String email, String city, int age, String headline, String bio, String about, String title, ProfilePhoto? photo, List<Social> socials, List<Fact> facts, List<SpokenLanguage> languages, List<Hobby> hobbies
 });
 
 
-
+@override $ProfilePhotoCopyWith<$Res>? get photo;
 
 }
 /// @nodoc
@@ -318,7 +334,7 @@ class __$ApiProfileCopyWithImpl<$Res>
 
 /// Create a copy of ApiProfile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? email = null,Object? city = null,Object? age = null,Object? headline = null,Object? bio = null,Object? about = null,Object? title = null,Object? socials = null,Object? facts = null,Object? languages = null,Object? hobbies = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? email = null,Object? city = null,Object? age = null,Object? headline = null,Object? bio = null,Object? about = null,Object? title = null,Object? photo = freezed,Object? socials = null,Object? facts = null,Object? languages = null,Object? hobbies = null,}) {
   return _then(_ApiProfile(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -328,11 +344,297 @@ as int,headline: null == headline ? _self.headline : headline // ignore: cast_nu
 as String,bio: null == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
 as String,about: null == about ? _self.about : about // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,socials: null == socials ? _self._socials : socials // ignore: cast_nullable_to_non_nullable
+as String,photo: freezed == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
+as ProfilePhoto?,socials: null == socials ? _self._socials : socials // ignore: cast_nullable_to_non_nullable
 as List<Social>,facts: null == facts ? _self._facts : facts // ignore: cast_nullable_to_non_nullable
 as List<Fact>,languages: null == languages ? _self._languages : languages // ignore: cast_nullable_to_non_nullable
 as List<SpokenLanguage>,hobbies: null == hobbies ? _self._hobbies : hobbies // ignore: cast_nullable_to_non_nullable
 as List<Hobby>,
+  ));
+}
+
+/// Create a copy of ApiProfile
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ProfilePhotoCopyWith<$Res>? get photo {
+    if (_self.photo == null) {
+    return null;
+  }
+
+  return $ProfilePhotoCopyWith<$Res>(_self.photo!, (value) {
+    return _then(_self.copyWith(photo: value));
+  });
+}
+}
+
+
+/// @nodoc
+mixin _$ProfilePhoto {
+
+ String get url; String get alt;
+/// Create a copy of ProfilePhoto
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ProfilePhotoCopyWith<ProfilePhoto> get copyWith => _$ProfilePhotoCopyWithImpl<ProfilePhoto>(this as ProfilePhoto, _$identity);
+
+  /// Serializes this ProfilePhoto to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  final _this = this as ProfilePhoto;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfilePhoto&&(identical(other.url, _this.url) || other.url == _this.url)&&(identical(other.alt, _this.alt) || other.alt == _this.alt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+  final _this = this as ProfilePhoto;
+  return Object.hash(runtimeType,_this.url,_this.alt);
+}
+
+@override
+String toString() {
+  final _this = this as ProfilePhoto;
+  return 'ProfilePhoto(url: ${_this.url}, alt: ${_this.alt})';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ProfilePhotoCopyWith<$Res>  {
+  factory $ProfilePhotoCopyWith(ProfilePhoto value, $Res Function(ProfilePhoto) _then) = _$ProfilePhotoCopyWithImpl;
+@useResult
+$Res call({
+ String url, String alt
+});
+
+
+
+
+}
+/// @nodoc
+class _$ProfilePhotoCopyWithImpl<$Res>
+    implements $ProfilePhotoCopyWith<$Res> {
+  _$ProfilePhotoCopyWithImpl(this._self, this._then);
+
+  final ProfilePhoto _self;
+  final $Res Function(ProfilePhoto) _then;
+
+/// Create a copy of ProfilePhoto
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? url = null,Object? alt = null,}) {
+  return _then(ProfilePhoto(
+url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String,alt: null == alt ? _self.alt : alt // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [ProfilePhoto].
+extension ProfilePhotoPatterns on ProfilePhoto {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProfilePhoto value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ProfilePhoto() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProfilePhoto value)  $default,){
+final _that = this;
+switch (_that) {
+case _ProfilePhoto():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProfilePhoto value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ProfilePhoto() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String url,  String alt)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ProfilePhoto() when $default != null:
+return $default(_that.url,_that.alt);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String url,  String alt)  $default,) {final _that = this;
+switch (_that) {
+case _ProfilePhoto():
+return $default(_that.url,_that.alt);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String url,  String alt)?  $default,) {final _that = this;
+switch (_that) {
+case _ProfilePhoto() when $default != null:
+return $default(_that.url,_that.alt);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _ProfilePhoto implements ProfilePhoto {
+  const _ProfilePhoto({required this.url, this.alt = ''});
+  factory _ProfilePhoto.fromJson(Map<String, dynamic> json) => _$ProfilePhotoFromJson(json);
+
+@override final  String url;
+@override@JsonKey() final  String alt;
+
+/// Create a copy of ProfilePhoto
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ProfilePhotoCopyWith<_ProfilePhoto> get copyWith => __$ProfilePhotoCopyWithImpl<_ProfilePhoto>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$ProfilePhotoToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfilePhoto&&(identical(other.url, url) || other.url == url)&&(identical(other.alt, alt) || other.alt == alt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+    return Object.hash(runtimeType,url,alt);
+}
+
+@override
+String toString() {
+    return 'ProfilePhoto(url: $url, alt: $alt)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ProfilePhotoCopyWith<$Res> implements $ProfilePhotoCopyWith<$Res> {
+  factory _$ProfilePhotoCopyWith(_ProfilePhoto value, $Res Function(_ProfilePhoto) _then) = __$ProfilePhotoCopyWithImpl;
+@override @useResult
+$Res call({
+ String url, String alt
+});
+
+
+
+
+}
+/// @nodoc
+class __$ProfilePhotoCopyWithImpl<$Res>
+    implements _$ProfilePhotoCopyWith<$Res> {
+  __$ProfilePhotoCopyWithImpl(this._self, this._then);
+
+  final _ProfilePhoto _self;
+  final $Res Function(_ProfilePhoto) _then;
+
+/// Create a copy of ProfilePhoto
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? url = null,Object? alt = null,}) {
+  return _then(_ProfilePhoto(
+url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String,alt: null == alt ? _self.alt : alt // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

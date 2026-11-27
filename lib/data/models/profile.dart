@@ -15,6 +15,9 @@ abstract class ApiProfile with _$ApiProfile {
     required String bio,
     required String about,
     required String title,
+
+    /// Portrait, cropped 4:5. `url` is a site-relative `/media/…` path.
+    ProfilePhoto? photo,
     @Default(<Social>[]) List<Social> socials,
     @Default(<Fact>[]) List<Fact> facts,
     @Default(<SpokenLanguage>[]) List<SpokenLanguage> languages,
@@ -23,6 +26,15 @@ abstract class ApiProfile with _$ApiProfile {
 
   factory ApiProfile.fromJson(Map<String, Object?> json) =>
       _$ApiProfileFromJson(json);
+}
+
+@freezed
+abstract class ProfilePhoto with _$ProfilePhoto {
+  const factory ProfilePhoto({required String url, @Default('') String alt}) =
+      _ProfilePhoto;
+
+  factory ProfilePhoto.fromJson(Map<String, Object?> json) =>
+      _$ProfilePhotoFromJson(json);
 }
 
 @freezed

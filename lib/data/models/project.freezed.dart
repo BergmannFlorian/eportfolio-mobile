@@ -16,7 +16,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ApiProject {
 
- String get id; String get name; String? get url;/// `null` means a personal project.
+ String get id; String get name; String? get url;/// Project image, cropped 16:10. Site-relative `/media/…` path.
+ String? get image;/// Description of [image] in the requested language.
+ String? get imageAlt;/// `null` means a personal project.
  String? get experienceId; bool get featured;/// Description paragraphs.
  List<String> get tasks;/// Highlights.
  List<String> get details;/// Technologies.
@@ -37,20 +39,20 @@ $ApiProjectCopyWith<ApiProject> get copyWith => _$ApiProjectCopyWithImpl<ApiProj
 @override
 bool operator ==(Object other) {
   final _this = this as ApiProject;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiProject&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.url, _this.url) || other.url == _this.url)&&(identical(other.experienceId, _this.experienceId) || other.experienceId == _this.experienceId)&&(identical(other.featured, _this.featured) || other.featured == _this.featured)&&const DeepCollectionEquality().equals(other.tasks, _this.tasks)&&const DeepCollectionEquality().equals(other.details, _this.details)&&const DeepCollectionEquality().equals(other.skills, _this.skills)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.year, _this.year) || other.year == _this.year)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.hosting, _this.hosting) || other.hosting == _this.hosting)&&(identical(other.snippet, _this.snippet) || other.snippet == _this.snippet)&&(identical(other.position, _this.position) || other.position == _this.position));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiProject&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.url, _this.url) || other.url == _this.url)&&(identical(other.image, _this.image) || other.image == _this.image)&&(identical(other.imageAlt, _this.imageAlt) || other.imageAlt == _this.imageAlt)&&(identical(other.experienceId, _this.experienceId) || other.experienceId == _this.experienceId)&&(identical(other.featured, _this.featured) || other.featured == _this.featured)&&const DeepCollectionEquality().equals(other.tasks, _this.tasks)&&const DeepCollectionEquality().equals(other.details, _this.details)&&const DeepCollectionEquality().equals(other.skills, _this.skills)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.year, _this.year) || other.year == _this.year)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.hosting, _this.hosting) || other.hosting == _this.hosting)&&(identical(other.snippet, _this.snippet) || other.snippet == _this.snippet)&&(identical(other.position, _this.position) || other.position == _this.position));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as ApiProject;
-  return Object.hash(runtimeType,_this.id,_this.name,_this.url,_this.experienceId,_this.featured,const DeepCollectionEquality().hash(_this.tasks),const DeepCollectionEquality().hash(_this.details),const DeepCollectionEquality().hash(_this.skills),_this.kind,_this.year,_this.status,_this.hosting,_this.snippet,_this.position);
+  return Object.hash(runtimeType,_this.id,_this.name,_this.url,_this.image,_this.imageAlt,_this.experienceId,_this.featured,const DeepCollectionEquality().hash(_this.tasks),const DeepCollectionEquality().hash(_this.details),const DeepCollectionEquality().hash(_this.skills),_this.kind,_this.year,_this.status,_this.hosting,_this.snippet,_this.position);
 }
 
 @override
 String toString() {
   final _this = this as ApiProject;
-  return 'ApiProject(id: ${_this.id}, name: ${_this.name}, url: ${_this.url}, experienceId: ${_this.experienceId}, featured: ${_this.featured}, tasks: ${_this.tasks}, details: ${_this.details}, skills: ${_this.skills}, kind: ${_this.kind}, year: ${_this.year}, status: ${_this.status}, hosting: ${_this.hosting}, snippet: ${_this.snippet}, position: ${_this.position})';
+  return 'ApiProject(id: ${_this.id}, name: ${_this.name}, url: ${_this.url}, image: ${_this.image}, imageAlt: ${_this.imageAlt}, experienceId: ${_this.experienceId}, featured: ${_this.featured}, tasks: ${_this.tasks}, details: ${_this.details}, skills: ${_this.skills}, kind: ${_this.kind}, year: ${_this.year}, status: ${_this.status}, hosting: ${_this.hosting}, snippet: ${_this.snippet}, position: ${_this.position})';
 }
 
 
@@ -61,7 +63,7 @@ abstract mixin class $ApiProjectCopyWith<$Res>  {
   factory $ApiProjectCopyWith(ApiProject value, $Res Function(ApiProject) _then) = _$ApiProjectCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? url, String? experienceId, bool featured, List<String> tasks, List<String> details, List<String> skills,@JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) ProjectKind? kind, int? year,@JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) ProjectStatus? status, String? hosting, String? snippet, int position
+ String id, String name, String? url, String? image, String? imageAlt, String? experienceId, bool featured, List<String> tasks, List<String> details, List<String> skills,@JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) ProjectKind? kind, int? year,@JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) ProjectStatus? status, String? hosting, String? snippet, int position
 });
 
 
@@ -78,11 +80,13 @@ class _$ApiProjectCopyWithImpl<$Res>
 
 /// Create a copy of ApiProject
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? url = freezed,Object? experienceId = freezed,Object? featured = null,Object? tasks = null,Object? details = null,Object? skills = null,Object? kind = freezed,Object? year = freezed,Object? status = freezed,Object? hosting = freezed,Object? snippet = freezed,Object? position = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? url = freezed,Object? image = freezed,Object? imageAlt = freezed,Object? experienceId = freezed,Object? featured = null,Object? tasks = null,Object? details = null,Object? skills = null,Object? kind = freezed,Object? year = freezed,Object? status = freezed,Object? hosting = freezed,Object? snippet = freezed,Object? position = null,}) {
   return _then(ApiProject(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String?,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as String?,imageAlt: freezed == imageAlt ? _self.imageAlt : imageAlt // ignore: cast_nullable_to_non_nullable
 as String?,experienceId: freezed == experienceId ? _self.experienceId : experienceId // ignore: cast_nullable_to_non_nullable
 as String?,featured: null == featured ? _self.featured : featured // ignore: cast_nullable_to_non_nullable
 as bool,tasks: null == tasks ? _self.tasks : tasks // ignore: cast_nullable_to_non_nullable
@@ -179,10 +183,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? url,  String? experienceId,  bool featured,  List<String> tasks,  List<String> details,  List<String> skills, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectKind? kind,  int? year, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectStatus? status,  String? hosting,  String? snippet,  int position)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? url,  String? image,  String? imageAlt,  String? experienceId,  bool featured,  List<String> tasks,  List<String> details,  List<String> skills, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectKind? kind,  int? year, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectStatus? status,  String? hosting,  String? snippet,  int position)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ApiProject() when $default != null:
-return $default(_that.id,_that.name,_that.url,_that.experienceId,_that.featured,_that.tasks,_that.details,_that.skills,_that.kind,_that.year,_that.status,_that.hosting,_that.snippet,_that.position);case _:
+return $default(_that.id,_that.name,_that.url,_that.image,_that.imageAlt,_that.experienceId,_that.featured,_that.tasks,_that.details,_that.skills,_that.kind,_that.year,_that.status,_that.hosting,_that.snippet,_that.position);case _:
   return orElse();
 
 }
@@ -200,10 +204,10 @@ return $default(_that.id,_that.name,_that.url,_that.experienceId,_that.featured,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? url,  String? experienceId,  bool featured,  List<String> tasks,  List<String> details,  List<String> skills, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectKind? kind,  int? year, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectStatus? status,  String? hosting,  String? snippet,  int position)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? url,  String? image,  String? imageAlt,  String? experienceId,  bool featured,  List<String> tasks,  List<String> details,  List<String> skills, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectKind? kind,  int? year, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectStatus? status,  String? hosting,  String? snippet,  int position)  $default,) {final _that = this;
 switch (_that) {
 case _ApiProject():
-return $default(_that.id,_that.name,_that.url,_that.experienceId,_that.featured,_that.tasks,_that.details,_that.skills,_that.kind,_that.year,_that.status,_that.hosting,_that.snippet,_that.position);case _:
+return $default(_that.id,_that.name,_that.url,_that.image,_that.imageAlt,_that.experienceId,_that.featured,_that.tasks,_that.details,_that.skills,_that.kind,_that.year,_that.status,_that.hosting,_that.snippet,_that.position);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -220,10 +224,10 @@ return $default(_that.id,_that.name,_that.url,_that.experienceId,_that.featured,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? url,  String? experienceId,  bool featured,  List<String> tasks,  List<String> details,  List<String> skills, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectKind? kind,  int? year, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectStatus? status,  String? hosting,  String? snippet,  int position)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? url,  String? image,  String? imageAlt,  String? experienceId,  bool featured,  List<String> tasks,  List<String> details,  List<String> skills, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectKind? kind,  int? year, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)  ProjectStatus? status,  String? hosting,  String? snippet,  int position)?  $default,) {final _that = this;
 switch (_that) {
 case _ApiProject() when $default != null:
-return $default(_that.id,_that.name,_that.url,_that.experienceId,_that.featured,_that.tasks,_that.details,_that.skills,_that.kind,_that.year,_that.status,_that.hosting,_that.snippet,_that.position);case _:
+return $default(_that.id,_that.name,_that.url,_that.image,_that.imageAlt,_that.experienceId,_that.featured,_that.tasks,_that.details,_that.skills,_that.kind,_that.year,_that.status,_that.hosting,_that.snippet,_that.position);case _:
   return null;
 
 }
@@ -235,12 +239,16 @@ return $default(_that.id,_that.name,_that.url,_that.experienceId,_that.featured,
 @JsonSerializable()
 
 class _ApiProject extends ApiProject {
-  const _ApiProject({required this.id, required this.name, this.url, this.experienceId, this.featured = false,  List<String> tasks = const <String>[],  List<String> details = const <String>[],  List<String> skills = const <String>[], @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) this.kind, this.year, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) this.status, this.hosting, this.snippet, this.position = 0}): _tasks = tasks,_details = details,_skills = skills,super._();
+  const _ApiProject({required this.id, required this.name, this.url, this.image, this.imageAlt, this.experienceId, this.featured = false,  List<String> tasks = const <String>[],  List<String> details = const <String>[],  List<String> skills = const <String>[], @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) this.kind, this.year, @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) this.status, this.hosting, this.snippet, this.position = 0}): _tasks = tasks,_details = details,_skills = skills,super._();
   factory _ApiProject.fromJson(Map<String, dynamic> json) => _$ApiProjectFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  String? url;
+/// Project image, cropped 16:10. Site-relative `/media/…` path.
+@override final  String? image;
+/// Description of [image] in the requested language.
+@override final  String? imageAlt;
 /// `null` means a personal project.
 @override final  String? experienceId;
 @override@JsonKey() final  bool featured;
@@ -294,18 +302,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiProject&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.url, url) || other.url == url)&&(identical(other.experienceId, experienceId) || other.experienceId == experienceId)&&(identical(other.featured, featured) || other.featured == featured)&&const DeepCollectionEquality().equals(other.tasks, _tasks)&&const DeepCollectionEquality().equals(other.details, _details)&&const DeepCollectionEquality().equals(other.skills, _skills)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.year, year) || other.year == year)&&(identical(other.status, status) || other.status == status)&&(identical(other.hosting, hosting) || other.hosting == hosting)&&(identical(other.snippet, snippet) || other.snippet == snippet)&&(identical(other.position, position) || other.position == position));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiProject&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.url, url) || other.url == url)&&(identical(other.image, image) || other.image == image)&&(identical(other.imageAlt, imageAlt) || other.imageAlt == imageAlt)&&(identical(other.experienceId, experienceId) || other.experienceId == experienceId)&&(identical(other.featured, featured) || other.featured == featured)&&const DeepCollectionEquality().equals(other.tasks, _tasks)&&const DeepCollectionEquality().equals(other.details, _details)&&const DeepCollectionEquality().equals(other.skills, _skills)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.year, year) || other.year == year)&&(identical(other.status, status) || other.status == status)&&(identical(other.hosting, hosting) || other.hosting == hosting)&&(identical(other.snippet, snippet) || other.snippet == snippet)&&(identical(other.position, position) || other.position == position));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,name,url,experienceId,featured,const DeepCollectionEquality().hash(_tasks),const DeepCollectionEquality().hash(_details),const DeepCollectionEquality().hash(_skills),kind,year,status,hosting,snippet,position);
+    return Object.hash(runtimeType,id,name,url,image,imageAlt,experienceId,featured,const DeepCollectionEquality().hash(_tasks),const DeepCollectionEquality().hash(_details),const DeepCollectionEquality().hash(_skills),kind,year,status,hosting,snippet,position);
 }
 
 @override
 String toString() {
-    return 'ApiProject(id: $id, name: $name, url: $url, experienceId: $experienceId, featured: $featured, tasks: $tasks, details: $details, skills: $skills, kind: $kind, year: $year, status: $status, hosting: $hosting, snippet: $snippet, position: $position)';
+    return 'ApiProject(id: $id, name: $name, url: $url, image: $image, imageAlt: $imageAlt, experienceId: $experienceId, featured: $featured, tasks: $tasks, details: $details, skills: $skills, kind: $kind, year: $year, status: $status, hosting: $hosting, snippet: $snippet, position: $position)';
 }
 
 
@@ -316,7 +324,7 @@ abstract mixin class _$ApiProjectCopyWith<$Res> implements $ApiProjectCopyWith<$
   factory _$ApiProjectCopyWith(_ApiProject value, $Res Function(_ApiProject) _then) = __$ApiProjectCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? url, String? experienceId, bool featured, List<String> tasks, List<String> details, List<String> skills,@JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) ProjectKind? kind, int? year,@JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) ProjectStatus? status, String? hosting, String? snippet, int position
+ String id, String name, String? url, String? image, String? imageAlt, String? experienceId, bool featured, List<String> tasks, List<String> details, List<String> skills,@JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) ProjectKind? kind, int? year,@JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) ProjectStatus? status, String? hosting, String? snippet, int position
 });
 
 
@@ -333,11 +341,13 @@ class __$ApiProjectCopyWithImpl<$Res>
 
 /// Create a copy of ApiProject
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? url = freezed,Object? experienceId = freezed,Object? featured = null,Object? tasks = null,Object? details = null,Object? skills = null,Object? kind = freezed,Object? year = freezed,Object? status = freezed,Object? hosting = freezed,Object? snippet = freezed,Object? position = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? url = freezed,Object? image = freezed,Object? imageAlt = freezed,Object? experienceId = freezed,Object? featured = null,Object? tasks = null,Object? details = null,Object? skills = null,Object? kind = freezed,Object? year = freezed,Object? status = freezed,Object? hosting = freezed,Object? snippet = freezed,Object? position = null,}) {
   return _then(_ApiProject(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String?,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as String?,imageAlt: freezed == imageAlt ? _self.imageAlt : imageAlt // ignore: cast_nullable_to_non_nullable
 as String?,experienceId: freezed == experienceId ? _self.experienceId : experienceId // ignore: cast_nullable_to_non_nullable
 as String?,featured: null == featured ? _self.featured : featured // ignore: cast_nullable_to_non_nullable
 as bool,tasks: null == tasks ? _self._tasks : tasks // ignore: cast_nullable_to_non_nullable

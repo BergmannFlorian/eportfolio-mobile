@@ -17,6 +17,10 @@ _ApiExperience _$ApiExperienceFromJson(Map<String, dynamic> json) =>
         title: $checkedConvert('title', (v) => v as String),
         degree: $checkedConvert('degree', (v) => v as String?),
         organization: $checkedConvert('organization', (v) => v as String?),
+        organizationLogo: $checkedConvert(
+          'organizationLogo',
+          (v) => v as String?,
+        ),
         start: $checkedConvert('start', (v) => DateTime.parse(v as String)),
         end: $checkedConvert(
           'end',
@@ -51,6 +55,7 @@ Map<String, dynamic> _$ApiExperienceToJson(_ApiExperience instance) =>
       'title': instance.title,
       'degree': instance.degree,
       'organization': instance.organization,
+      'organizationLogo': instance.organizationLogo,
       'start': instance.start.toIso8601String(),
       'end': instance.end?.toIso8601String(),
       'tasks': instance.tasks,

@@ -12,6 +12,7 @@ import '../refresh.dart';
 import '../theme/app_theme.dart';
 import '../widgets/chrome.dart';
 import '../widgets/common.dart';
+import '../widgets/media_image.dart';
 import '../widgets/project_card.dart';
 import '../widgets/resource_view.dart';
 
@@ -253,6 +254,10 @@ class _PersonalProjectRow extends StatelessWidget {
                       Text('↗', style: AppText.mono(c.fgStrong)),
                   ],
                 ),
+                if (p.image != null) ...[
+                  const SizedBox(height: 12),
+                  ProjectImage(project: p),
+                ],
                 const SizedBox(height: 10),
                 Text(p.name, style: AppText.heading(c.fgStrong, size: 22)),
                 ProjectBadges(project: p, topSpacing: 10),
@@ -272,6 +277,33 @@ class _PersonalProjectRow extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The project image in its 16:10 frame, grayscale like on the website.
+/// Renders nothing when the project has no image.
+class ProjectImage extends StatelessWidget {
+  const ProjectImage({super.key, required this.project});
+
+  final ApiProject project;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    if (project.image == null) return const SizedBox.shrink();
+    return AspectRatio(
+      aspectRatio: 16 / 10,
+      child: DecoratedBox(
+        position: DecorationPosition.foreground,
+        decoration: BoxDecoration(border: Border.all(color: c.border)),
+        child: MediaImage(
+          path: project.image,
+          grayscale: true,
+          semanticLabel: project.imageAlt,
+          fallback: ColoredBox(color: c.surface),
         ),
       ),
     );
@@ -372,6 +404,9 @@ class _GroupHeader extends StatelessWidget {
         : '${experienceKindLabel(l10n, e.kind)} · ${shortPeriod(e, l10n)}';
     return LinkRow(
       minHeight: 48,
+      leading: e == null
+          ? null
+          : OrgLogo(path: e.organizationLogo, name: title, size: 36),
       title: Text(title, style: AppText.heading(c.fgStrong)),
       subtitle: meta == null
           ? null

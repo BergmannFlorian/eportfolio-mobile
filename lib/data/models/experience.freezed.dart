@@ -16,7 +16,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ApiExperience {
 
- String get id; ExperienceKind get kind; String get title; String? get degree; String? get organization; DateTime get start;/// `null` means the experience is ongoing.
+ String get id; ExperienceKind get kind; String get title; String? get degree; String? get organization;/// Company or school logo, uncropped (PNG/WebP or SVG). Site-relative path.
+ String? get organizationLogo; DateTime get start;/// `null` means the experience is ongoing.
  DateTime? get end; List<String> get tasks; List<String> get skills; List<String> get projectIds;
 /// Create a copy of ApiExperience
 /// with the given fields replaced by the non-null parameter values.
@@ -31,20 +32,20 @@ $ApiExperienceCopyWith<ApiExperience> get copyWith => _$ApiExperienceCopyWithImp
 @override
 bool operator ==(Object other) {
   final _this = this as ApiExperience;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiExperience&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.degree, _this.degree) || other.degree == _this.degree)&&(identical(other.organization, _this.organization) || other.organization == _this.organization)&&(identical(other.start, _this.start) || other.start == _this.start)&&(identical(other.end, _this.end) || other.end == _this.end)&&const DeepCollectionEquality().equals(other.tasks, _this.tasks)&&const DeepCollectionEquality().equals(other.skills, _this.skills)&&const DeepCollectionEquality().equals(other.projectIds, _this.projectIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiExperience&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.degree, _this.degree) || other.degree == _this.degree)&&(identical(other.organization, _this.organization) || other.organization == _this.organization)&&(identical(other.organizationLogo, _this.organizationLogo) || other.organizationLogo == _this.organizationLogo)&&(identical(other.start, _this.start) || other.start == _this.start)&&(identical(other.end, _this.end) || other.end == _this.end)&&const DeepCollectionEquality().equals(other.tasks, _this.tasks)&&const DeepCollectionEquality().equals(other.skills, _this.skills)&&const DeepCollectionEquality().equals(other.projectIds, _this.projectIds));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as ApiExperience;
-  return Object.hash(runtimeType,_this.id,_this.kind,_this.title,_this.degree,_this.organization,_this.start,_this.end,const DeepCollectionEquality().hash(_this.tasks),const DeepCollectionEquality().hash(_this.skills),const DeepCollectionEquality().hash(_this.projectIds));
+  return Object.hash(runtimeType,_this.id,_this.kind,_this.title,_this.degree,_this.organization,_this.organizationLogo,_this.start,_this.end,const DeepCollectionEquality().hash(_this.tasks),const DeepCollectionEquality().hash(_this.skills),const DeepCollectionEquality().hash(_this.projectIds));
 }
 
 @override
 String toString() {
   final _this = this as ApiExperience;
-  return 'ApiExperience(id: ${_this.id}, kind: ${_this.kind}, title: ${_this.title}, degree: ${_this.degree}, organization: ${_this.organization}, start: ${_this.start}, end: ${_this.end}, tasks: ${_this.tasks}, skills: ${_this.skills}, projectIds: ${_this.projectIds})';
+  return 'ApiExperience(id: ${_this.id}, kind: ${_this.kind}, title: ${_this.title}, degree: ${_this.degree}, organization: ${_this.organization}, organizationLogo: ${_this.organizationLogo}, start: ${_this.start}, end: ${_this.end}, tasks: ${_this.tasks}, skills: ${_this.skills}, projectIds: ${_this.projectIds})';
 }
 
 
@@ -55,7 +56,7 @@ abstract mixin class $ApiExperienceCopyWith<$Res>  {
   factory $ApiExperienceCopyWith(ApiExperience value, $Res Function(ApiExperience) _then) = _$ApiExperienceCopyWithImpl;
 @useResult
 $Res call({
- String id, ExperienceKind kind, String title, String? degree, String? organization, DateTime start, DateTime? end, List<String> tasks, List<String> skills, List<String> projectIds
+ String id, ExperienceKind kind, String title, String? degree, String? organization, String? organizationLogo, DateTime start, DateTime? end, List<String> tasks, List<String> skills, List<String> projectIds
 });
 
 
@@ -72,13 +73,14 @@ class _$ApiExperienceCopyWithImpl<$Res>
 
 /// Create a copy of ApiExperience
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? kind = null,Object? title = null,Object? degree = freezed,Object? organization = freezed,Object? start = null,Object? end = freezed,Object? tasks = null,Object? skills = null,Object? projectIds = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? kind = null,Object? title = null,Object? degree = freezed,Object? organization = freezed,Object? organizationLogo = freezed,Object? start = null,Object? end = freezed,Object? tasks = null,Object? skills = null,Object? projectIds = null,}) {
   return _then(ApiExperience(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
 as ExperienceKind,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,degree: freezed == degree ? _self.degree : degree // ignore: cast_nullable_to_non_nullable
 as String?,organization: freezed == organization ? _self.organization : organization // ignore: cast_nullable_to_non_nullable
+as String?,organizationLogo: freezed == organizationLogo ? _self.organizationLogo : organizationLogo // ignore: cast_nullable_to_non_nullable
 as String?,start: null == start ? _self.start : start // ignore: cast_nullable_to_non_nullable
 as DateTime,end: freezed == end ? _self.end : end // ignore: cast_nullable_to_non_nullable
 as DateTime?,tasks: null == tasks ? _self.tasks : tasks // ignore: cast_nullable_to_non_nullable
@@ -169,10 +171,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  ExperienceKind kind,  String title,  String? degree,  String? organization,  DateTime start,  DateTime? end,  List<String> tasks,  List<String> skills,  List<String> projectIds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  ExperienceKind kind,  String title,  String? degree,  String? organization,  String? organizationLogo,  DateTime start,  DateTime? end,  List<String> tasks,  List<String> skills,  List<String> projectIds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ApiExperience() when $default != null:
-return $default(_that.id,_that.kind,_that.title,_that.degree,_that.organization,_that.start,_that.end,_that.tasks,_that.skills,_that.projectIds);case _:
+return $default(_that.id,_that.kind,_that.title,_that.degree,_that.organization,_that.organizationLogo,_that.start,_that.end,_that.tasks,_that.skills,_that.projectIds);case _:
   return orElse();
 
 }
@@ -190,10 +192,10 @@ return $default(_that.id,_that.kind,_that.title,_that.degree,_that.organization,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  ExperienceKind kind,  String title,  String? degree,  String? organization,  DateTime start,  DateTime? end,  List<String> tasks,  List<String> skills,  List<String> projectIds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  ExperienceKind kind,  String title,  String? degree,  String? organization,  String? organizationLogo,  DateTime start,  DateTime? end,  List<String> tasks,  List<String> skills,  List<String> projectIds)  $default,) {final _that = this;
 switch (_that) {
 case _ApiExperience():
-return $default(_that.id,_that.kind,_that.title,_that.degree,_that.organization,_that.start,_that.end,_that.tasks,_that.skills,_that.projectIds);case _:
+return $default(_that.id,_that.kind,_that.title,_that.degree,_that.organization,_that.organizationLogo,_that.start,_that.end,_that.tasks,_that.skills,_that.projectIds);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -210,10 +212,10 @@ return $default(_that.id,_that.kind,_that.title,_that.degree,_that.organization,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  ExperienceKind kind,  String title,  String? degree,  String? organization,  DateTime start,  DateTime? end,  List<String> tasks,  List<String> skills,  List<String> projectIds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  ExperienceKind kind,  String title,  String? degree,  String? organization,  String? organizationLogo,  DateTime start,  DateTime? end,  List<String> tasks,  List<String> skills,  List<String> projectIds)?  $default,) {final _that = this;
 switch (_that) {
 case _ApiExperience() when $default != null:
-return $default(_that.id,_that.kind,_that.title,_that.degree,_that.organization,_that.start,_that.end,_that.tasks,_that.skills,_that.projectIds);case _:
+return $default(_that.id,_that.kind,_that.title,_that.degree,_that.organization,_that.organizationLogo,_that.start,_that.end,_that.tasks,_that.skills,_that.projectIds);case _:
   return null;
 
 }
@@ -225,7 +227,7 @@ return $default(_that.id,_that.kind,_that.title,_that.degree,_that.organization,
 @JsonSerializable()
 
 class _ApiExperience extends ApiExperience {
-  const _ApiExperience({required this.id, required this.kind, required this.title, this.degree, this.organization, required this.start, this.end,  List<String> tasks = const <String>[],  List<String> skills = const <String>[],  List<String> projectIds = const <String>[]}): _tasks = tasks,_skills = skills,_projectIds = projectIds,super._();
+  const _ApiExperience({required this.id, required this.kind, required this.title, this.degree, this.organization, this.organizationLogo, required this.start, this.end,  List<String> tasks = const <String>[],  List<String> skills = const <String>[],  List<String> projectIds = const <String>[]}): _tasks = tasks,_skills = skills,_projectIds = projectIds,super._();
   factory _ApiExperience.fromJson(Map<String, dynamic> json) => _$ApiExperienceFromJson(json);
 
 @override final  String id;
@@ -233,6 +235,8 @@ class _ApiExperience extends ApiExperience {
 @override final  String title;
 @override final  String? degree;
 @override final  String? organization;
+/// Company or school logo, uncropped (PNG/WebP or SVG). Site-relative path.
+@override final  String? organizationLogo;
 @override final  DateTime start;
 /// `null` means the experience is ongoing.
 @override final  DateTime? end;
@@ -271,18 +275,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiExperience&&(identical(other.id, id) || other.id == id)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.title, title) || other.title == title)&&(identical(other.degree, degree) || other.degree == degree)&&(identical(other.organization, organization) || other.organization == organization)&&(identical(other.start, start) || other.start == start)&&(identical(other.end, end) || other.end == end)&&const DeepCollectionEquality().equals(other.tasks, _tasks)&&const DeepCollectionEquality().equals(other.skills, _skills)&&const DeepCollectionEquality().equals(other.projectIds, _projectIds));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiExperience&&(identical(other.id, id) || other.id == id)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.title, title) || other.title == title)&&(identical(other.degree, degree) || other.degree == degree)&&(identical(other.organization, organization) || other.organization == organization)&&(identical(other.organizationLogo, organizationLogo) || other.organizationLogo == organizationLogo)&&(identical(other.start, start) || other.start == start)&&(identical(other.end, end) || other.end == end)&&const DeepCollectionEquality().equals(other.tasks, _tasks)&&const DeepCollectionEquality().equals(other.skills, _skills)&&const DeepCollectionEquality().equals(other.projectIds, _projectIds));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,kind,title,degree,organization,start,end,const DeepCollectionEquality().hash(_tasks),const DeepCollectionEquality().hash(_skills),const DeepCollectionEquality().hash(_projectIds));
+    return Object.hash(runtimeType,id,kind,title,degree,organization,organizationLogo,start,end,const DeepCollectionEquality().hash(_tasks),const DeepCollectionEquality().hash(_skills),const DeepCollectionEquality().hash(_projectIds));
 }
 
 @override
 String toString() {
-    return 'ApiExperience(id: $id, kind: $kind, title: $title, degree: $degree, organization: $organization, start: $start, end: $end, tasks: $tasks, skills: $skills, projectIds: $projectIds)';
+    return 'ApiExperience(id: $id, kind: $kind, title: $title, degree: $degree, organization: $organization, organizationLogo: $organizationLogo, start: $start, end: $end, tasks: $tasks, skills: $skills, projectIds: $projectIds)';
 }
 
 
@@ -293,7 +297,7 @@ abstract mixin class _$ApiExperienceCopyWith<$Res> implements $ApiExperienceCopy
   factory _$ApiExperienceCopyWith(_ApiExperience value, $Res Function(_ApiExperience) _then) = __$ApiExperienceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, ExperienceKind kind, String title, String? degree, String? organization, DateTime start, DateTime? end, List<String> tasks, List<String> skills, List<String> projectIds
+ String id, ExperienceKind kind, String title, String? degree, String? organization, String? organizationLogo, DateTime start, DateTime? end, List<String> tasks, List<String> skills, List<String> projectIds
 });
 
 
@@ -310,13 +314,14 @@ class __$ApiExperienceCopyWithImpl<$Res>
 
 /// Create a copy of ApiExperience
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? kind = null,Object? title = null,Object? degree = freezed,Object? organization = freezed,Object? start = null,Object? end = freezed,Object? tasks = null,Object? skills = null,Object? projectIds = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? kind = null,Object? title = null,Object? degree = freezed,Object? organization = freezed,Object? organizationLogo = freezed,Object? start = null,Object? end = freezed,Object? tasks = null,Object? skills = null,Object? projectIds = null,}) {
   return _then(_ApiExperience(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
 as ExperienceKind,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,degree: freezed == degree ? _self.degree : degree // ignore: cast_nullable_to_non_nullable
 as String?,organization: freezed == organization ? _self.organization : organization // ignore: cast_nullable_to_non_nullable
+as String?,organizationLogo: freezed == organizationLogo ? _self.organizationLogo : organizationLogo // ignore: cast_nullable_to_non_nullable
 as String?,start: null == start ? _self.start : start // ignore: cast_nullable_to_non_nullable
 as DateTime,end: freezed == end ? _self.end : end // ignore: cast_nullable_to_non_nullable
 as DateTime?,tasks: null == tasks ? _self._tasks : tasks // ignore: cast_nullable_to_non_nullable

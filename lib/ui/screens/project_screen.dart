@@ -73,6 +73,11 @@ class _ProjectContent extends StatelessWidget {
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
+        if (p.image != null)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+            child: ProjectImage(project: p),
+          ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 28, 20, 28),
           child: Column(

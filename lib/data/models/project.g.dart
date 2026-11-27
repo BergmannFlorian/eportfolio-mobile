@@ -12,6 +12,8 @@ _ApiProject _$ApiProjectFromJson(Map<String, dynamic> json) =>
         id: $checkedConvert('id', (v) => v as String),
         name: $checkedConvert('name', (v) => v as String),
         url: $checkedConvert('url', (v) => v as String?),
+        image: $checkedConvert('image', (v) => v as String?),
+        imageAlt: $checkedConvert('imageAlt', (v) => v as String?),
         experienceId: $checkedConvert('experienceId', (v) => v as String?),
         featured: $checkedConvert('featured', (v) => v as bool? ?? false),
         tasks: $checkedConvert(
@@ -61,6 +63,8 @@ Map<String, dynamic> _$ApiProjectToJson(_ApiProject instance) =>
       'id': instance.id,
       'name': instance.name,
       'url': instance.url,
+      'image': instance.image,
+      'imageAlt': instance.imageAlt,
       'experienceId': instance.experienceId,
       'featured': instance.featured,
       'tasks': instance.tasks,

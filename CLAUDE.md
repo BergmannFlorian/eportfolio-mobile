@@ -156,6 +156,7 @@ interface ApiIndex {
 interface ApiProfile {
   name: string; email: string; city: string; age: number;
   headline: string; bio: string; about: string; title: string;
+  photo: { url: string; alt: string } | null; // portrait, cropped 4:5 (960×1200 max)
   socials: { network: string; url: string }[];
   facts: { label: string; value: string }[];
   languages: { name: string; level: string; percent: number }[];
@@ -165,13 +166,15 @@ interface ApiExperience {
   id: string;                   // stable, e.g. "job-iomedia-sa-2021-12"
   kind: 'job' | 'education';
   title: string; degree: string | null; organization: string | null;
+  organizationLogo: string | null; // uncropped, 256 px max, PNG/WebP or SVG
   start: string; end: string | null; // YYYY-MM-DD, end null = ongoing
   tasks: string[]; skills: string[];
   projectIds: string[];         // -> ApiProject.id
 }
 interface ApiProject {
   id: string; name: string; url: string | null;
-  image: string | null;         // internal key, no public URL: ignore
+  image: string | null;         // project image, cropped 16:10 (1600×1000 max)
+  imageAlt: string | null;      // image description in the requested language
   featured: boolean;
   experienceId: string | null;  // null = personal project
   tasks: string[];              // description paragraphs
@@ -197,10 +200,34 @@ interface ApiSkills {
 interface ApiCertificate { title: string; date: string; url: string | null }
 ```
 
+### Images (added 2026-11-27)
+
+- Every image URL is a **site-relative path** (`/media/<file>`).
+  - `mediaUrl()` in `lib/core/media/media.dart` turns it into an absolute URL.
+  - Formats: mostly WebP, sometimes PNG/JPEG, and SVG for some logos (`flutter_svg`).
+- Files are immutable under a given name: a replaced image gets a new URL.
+  - `CachedMediaStore` keeps them on disk with no expiry and no revalidation: it reads
+    `getFileFromCache` first and never calls `getSingleFile`, which would refetch after the
+    HTTP max-age.
+- Every image field can be `null`. Each one has a fallback:
+  - portrait → initials;
+  - logo → initials in the square;
+  - project → card without an image.
+- Rendering:
+  - Portrait: grayscale, 4:5.
+  - Project grid cards: grayscale image under a 90% veil of the card color, like the website.
+  - Personal project rows and project detail: visible grayscale 16:10 image, with no text on top.
+  - Logos: as is, `BoxFit.contain` in a white square, in both themes.
+- Accessibility:
+  - `photo.alt` and `imageAlt` are the image descriptions.
+  - A logo is described by the organization's name.
+- Tests: `mediaStoreProvider` is overridden with `FakeMediaStore` (see `test/helpers.dart`).
+- `LayoutBuilder` in `MediaImage` does not support intrinsic sizing. Inside `IntrinsicHeight`,
+  keep images in a fixed-size box or a `Positioned`.
+
 ### Known API gaps (reported to the user, 2026-11-24, not yet fixed)
 
-1. **Project images**: `image` is an internal key, so cards are text-only.
-   Needs an absolute `imageUrl`, ideally with width, height and alt text.
+1. ~~Project images~~: solved by `image` / `imageAlt` (2026-11-27).
 2. ~~Project order~~: solved by `position` (2026-11-24).
 3. **Legacy projects**: `progcraft`, `runeo`, `websocket-notifications` and
    `intrepidknowledge-mobile-app` have empty `skills`, and their tech and duration are stored in

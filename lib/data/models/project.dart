@@ -22,6 +22,12 @@ abstract class ApiProject with _$ApiProject {
     required String name,
     String? url,
 
+    /// Project image, cropped 16:10. Site-relative `/media/…` path.
+    String? image,
+
+    /// Description of [image] in the requested language.
+    String? imageAlt,
+
     /// `null` means a personal project.
     String? experienceId,
     @Default(false) bool featured,

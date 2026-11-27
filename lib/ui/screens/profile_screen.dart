@@ -13,6 +13,7 @@ import '../refresh.dart';
 import '../theme/app_theme.dart';
 import '../widgets/chrome.dart';
 import '../widgets/common.dart';
+import '../widgets/media_image.dart';
 import '../widgets/resource_view.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -70,6 +71,11 @@ class _ProfileContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: _Portrait(profile: p),
+              ),
+              const SizedBox(height: 24),
               Kicker(l10n.profileKicker),
               const SizedBox(height: 14),
               Semantics(
@@ -198,6 +204,45 @@ class _ProfileContent extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Grayscale 4:5 portrait, as on the website; initials when there is none.
+class _Portrait extends StatelessWidget {
+  const _Portrait({required this.profile});
+
+  final ApiProfile profile;
+
+  static const _width = 132.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    final photo = profile.photo;
+    final alt = photo?.alt.trim() ?? '';
+    return SizedBox(
+      width: _width,
+      height: _width * 5 / 4,
+      child: DecoratedBox(
+        position: DecorationPosition.foreground,
+        decoration: BoxDecoration(border: Border.all(color: c.borderStrong)),
+        child: MediaImage(
+          path: photo?.url,
+          grayscale: true,
+          semanticLabel: alt.isNotEmpty ? alt : profile.name,
+          fallback: ExcludeSemantics(
+            child: Container(
+              color: c.surface,
+              alignment: Alignment.center,
+              child: Text(
+                initials(profile.name),
+                style: AppText.display(c.fgSubtle, size: 40),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../labels.dart';
 import '../theme/app_theme.dart';
 import 'common.dart';
+import 'media_image.dart';
 
 /// Grid card: number, ↗ when the project has a URL, name, meta and chips.
 /// Switches to the inverse palette while pressed.
@@ -38,9 +39,8 @@ class ProjectCard extends StatelessWidget {
       builder: (context, pressed) {
         final strong = pressed ? c.inverseFg : c.fgStrong;
         final subtle = pressed ? c.inverseSubtle : c.fgSubtle;
-        return Container(
+        final content = Container(
           constraints: BoxConstraints(minHeight: minHeight),
-          color: pressed ? c.inverse : c.surface,
           padding: const EdgeInsets.all(14),
           child: ExcludeSemantics(
             child: Column(
@@ -85,6 +85,17 @@ class ProjectCard extends StatelessWidget {
               ],
             ),
           ),
+        );
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: VeiledImage(
+                path: project.image,
+                veilColor: pressed ? c.inverse : c.surface,
+              ),
+            ),
+            content,
+          ],
         );
       },
     );

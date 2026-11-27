@@ -13,6 +13,7 @@ import '../refresh.dart';
 import '../theme/app_theme.dart';
 import '../widgets/chrome.dart';
 import '../widgets/common.dart';
+import '../widgets/media_image.dart';
 import '../widgets/resource_view.dart';
 import 'not_found.dart';
 
@@ -78,6 +79,12 @@ class _ExperienceContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              OrgLogo(
+                path: e.organizationLogo,
+                name: e.organization ?? e.title,
+                size: 56,
+              ),
+              const SizedBox(height: 18),
               Kicker(experienceKindLabel(l10n, e.kind)),
               const SizedBox(height: 12),
               TwoLineTitle(e.title, second, size: 32),
