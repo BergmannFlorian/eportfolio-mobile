@@ -43,7 +43,8 @@ void main() {
       for (var i = 0; i < 10; i++)
         cache.write('fr/projects', CacheEntry(json: i, fetchedAt: at)),
     ]);
-    expect((await cache.read('fr/projects'))!.json, isA<int>());
+    // Writes are serialized: the last one wins.
+    expect((await cache.read('fr/projects'))!.json, 9);
   });
 
   test('a corrupt file is treated as a miss', () async {

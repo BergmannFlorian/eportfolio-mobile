@@ -40,18 +40,30 @@ class JsonCache {
     }
   }
 
-  Future<void> write(String key, CacheEntry entry) async {
+  /// Last pending write per key. Two refreshes of the same resource can
+  /// overlap; writes to one key run one after the other, last one wins.
+  final _pending = <String, Future<void>>{};
+
+  Future<void> write(String key, CacheEntry entry) {
+    final previous = _pending[key] ?? Future<void>.value();
+    final next = previous
+        .catchError((Object _) {}) // a failed write must not block the next
+        .then((_) => _write(key, entry));
+    _pending[key] = next;
+    return next.whenComplete(() {
+      if (identical(_pending[key], next)) _pending.remove(key);
+    });
+  }
+
+  Future<void> _write(String key, CacheEntry entry) async {
     final file = await _file(key);
     await file.parent.create(recursive: true);
     final payload = jsonEncode({
       'fetchedAt': entry.fetchedAt.toUtc().toIso8601String(),
       'body': entry.json,
     });
-    // Write then rename, so a crash never leaves a half-written file. The temp
-    // name is unique: two refreshes of the same resource can overlap.
-    final tmp = File(
-      '${file.path}.${DateTime.now().microsecondsSinceEpoch}.$hashCode.tmp',
-    );
+    // Write then rename, so a crash never leaves a half-written file.
+    final tmp = File('${file.path}.tmp');
     await tmp.writeAsString(payload, flush: true);
     await tmp.rename(file.path);
   }
