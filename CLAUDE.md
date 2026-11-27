@@ -99,15 +99,15 @@ Bottom tab bar with 4 tabs, plus settings from the app bar.
    (all others).
    - Personal page: list of rich cards (badges, description, chips).
    - Client page: grouped by experience (section header links to it), 2-column numbered grid.
-   - Both are sorted by `position`.
+   - Both keep the API order (sorted by `position` server-side).
    - Project detail:
      - Badges for kind, status, year and hosting, each only when set.
      - Tasks, details, skills.
      - Snippet with a copy button, ↗ link, link to the parent experience.
 4. **Profile**
    - `about`, facts, spoken languages with level bars, hobbies, socials.
-   - Skills by category, sorted top → mid → bottom, with a recency legend and `*` for
-     `personalOnly`.
+   - Skills by category: categories and skills both keep the API order, and empty categories
+     are hidden. There is a recency legend (chip style) and `*` for `personalOnly`.
    - Certificates.
 5. **Settings**: language, theme, last sync date, app version.
 
@@ -191,14 +191,34 @@ interface ApiProject {
 }
 interface ApiSkills {
   stack: string[];
-  categories: {
-    code: 'langs' | 'libs' | 'tools'; name: string;
+  categories: {             // the CV columns, in display order; any number, can be empty
+    code: string;           // free-form and stable ('langs', 'frameworks'…): never rely on known codes
+    name: string;           // translated title, displayed as is
     skills: { name: string; level: 'top' | 'mid' | 'bottom'; personalOnly: boolean }[];
     // level = how recently used; personalOnly = only used in personal projects (asterisk + legend)
   }[];
 }
 interface ApiCertificate { title: string; date: string; url: string | null }
 ```
+
+### Content edited on the website (2026-11-27)
+
+- Texts, projects, experiences, skills and images change at any time. Respect the 5-minute
+  cache and keep pull-to-refresh. Only `/media/…` files are immutable.
+- Skill categories are dynamic:
+  - display them in the received order, with `name` as title; skills inside keep the API order
+    too (no re-sorting by level);
+  - never hard-code codes (`langs`/`libs`/`tools`) or names;
+  - hide empty categories.
+- Projects: keep the response order (sorted by `position` server-side); do not re-sort.
+  - The "Personal project NN" number is the rank in the personal list, not `position`.
+  - As of 2026-11-27, `position` is still numbered separately for personal and client projects.
+- Experiences: the API is meant to sort them newest first. As of 2026-11-27 it still sends
+  jobs, then education, so the app keeps sorting by `start` (`sortedExperiences`).
+- Languages: `level` already includes the CEFR level ("Technical (B1)", "Native"): display it
+  as is; `percent` drives the bar.
+- `/cv` is not used by the app. Its `levels` is now an ordered list, and its skill keys are
+  dynamic category codes.
 
 ### Images (added 2026-11-27)
 

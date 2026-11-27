@@ -8,6 +8,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../data/models/experience.dart';
 import '../../data/models/project.dart';
 import '../../data/resources.dart';
+import '../../data/selectors.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../format.dart';
 import '../refresh.dart';
@@ -46,7 +47,14 @@ class ProjectScreen extends ConsumerWidget {
               final experience = experiences.requireValue.data
                   .where((e) => e.id == project.experienceId)
                   .firstOrNull;
-              return _ProjectContent(project: project, experience: experience);
+              // Rank among personal projects, as shown on the Projects page.
+              final rank =
+                  personalProjects(projects.requireValue.data).indexOf(project) + 1;
+              return _ProjectContent(
+                project: project,
+                experience: experience,
+                personalRank: rank,
+              );
             },
           ),
         ),
@@ -56,10 +64,17 @@ class ProjectScreen extends ConsumerWidget {
 }
 
 class _ProjectContent extends StatelessWidget {
-  const _ProjectContent({required this.project, required this.experience});
+  const _ProjectContent({
+    required this.project,
+    required this.experience,
+    required this.personalRank,
+  });
 
   final ApiProject project;
   final ApiExperience? experience;
+
+  /// 1-based rank among personal projects; 0 for client projects.
+  final int personalRank;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +82,7 @@ class _ProjectContent extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final p = project;
     final kicker = p.isPersonal
-        ? l10n.projectPersonalKicker(twoDigits(p.position))
+        ? l10n.projectPersonalKicker(twoDigits(personalRank))
         : experience?.organization ?? experience?.title;
 
     return ListView(

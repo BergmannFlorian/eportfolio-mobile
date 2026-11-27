@@ -17,7 +17,8 @@ T _$identity<T>(T value) => value;
 mixin _$ApiSkills {
 
 /// Short "main stack" list.
- List<String> get stack; List<SkillCategory> get categories;
+ List<String> get stack;/// The CV columns, in display order. Any number; a category can be empty.
+ List<SkillCategory> get categories;
 /// Create a copy of ApiSkills
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -229,7 +230,9 @@ class _ApiSkills implements ApiSkills {
   return EqualUnmodifiableListView(_stack);
 }
 
+/// The CV columns, in display order. Any number; a category can be empty.
  final  List<SkillCategory> _categories;
+/// The CV columns, in display order. Any number; a category can be empty.
 @override@JsonKey() List<SkillCategory> get categories {
   if (_categories is EqualUnmodifiableListView) return _categories;
   // ignore: implicit_dynamic_type
@@ -304,8 +307,10 @@ as List<SkillCategory>,
 /// @nodoc
 mixin _$SkillCategory {
 
-/// `langs`, `libs` or `tools`.
- String get code; String get name; List<Skill> get skills;
+/// Free-form, stable code (`langs`, `frameworks`…). Categories are edited
+/// on the website: never rely on known codes, display [name].
+ String get code;/// Translated title, displayed as is.
+ String get name; List<Skill> get skills;
 /// Create a copy of SkillCategory
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -509,8 +514,10 @@ class _SkillCategory implements SkillCategory {
   const _SkillCategory({required this.code, required this.name,  List<Skill> skills = const <Skill>[]}): _skills = skills;
   factory _SkillCategory.fromJson(Map<String, dynamic> json) => _$SkillCategoryFromJson(json);
 
-/// `langs`, `libs` or `tools`.
+/// Free-form, stable code (`langs`, `frameworks`…). Categories are edited
+/// on the website: never rely on known codes, display [name].
 @override final  String code;
+/// Translated title, displayed as is.
 @override final  String name;
  final  List<Skill> _skills;
 @override@JsonKey() List<Skill> get skills {

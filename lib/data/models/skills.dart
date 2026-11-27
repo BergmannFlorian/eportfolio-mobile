@@ -12,6 +12,8 @@ abstract class ApiSkills with _$ApiSkills {
   const factory ApiSkills({
     /// Short "main stack" list.
     @Default(<String>[]) List<String> stack,
+
+    /// The CV columns, in display order. Any number; a category can be empty.
     @Default(<SkillCategory>[]) List<SkillCategory> categories,
   }) = _ApiSkills;
 
@@ -22,8 +24,11 @@ abstract class ApiSkills with _$ApiSkills {
 @freezed
 abstract class SkillCategory with _$SkillCategory {
   const factory SkillCategory({
-    /// `langs`, `libs` or `tools`.
+    /// Free-form, stable code (`langs`, `frameworks`…). Categories are edited
+    /// on the website: never rely on known codes, display [name].
     required String code,
+
+    /// Translated title, displayed as is.
     required String name,
     @Default(<Skill>[]) List<Skill> skills,
   }) = _SkillCategory;

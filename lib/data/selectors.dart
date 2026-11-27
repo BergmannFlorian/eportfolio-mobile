@@ -2,19 +2,24 @@ import 'models/experience.dart';
 import 'models/project.dart';
 import 'models/skills.dart';
 
-/// Experiences, most recent start first (the API lists jobs, then education).
+/// Experiences, most recent start first. The API is meant to send them in
+/// that order, but as of 2026-11 it still lists jobs, then education.
 List<ApiExperience> sortedExperiences(Iterable<ApiExperience> experiences) =>
     [...experiences]..sort((a, b) => b.start.compareTo(a.start));
 
-int _byPosition(ApiProject a, ApiProject b) => a.position.compareTo(b.position);
+// Projects come sorted by `position`: keep the response order, never re-sort.
 
-/// Personal projects (`experienceId == null`), by `position`.
+/// Personal projects (`experienceId == null`), in response order.
 List<ApiProject> personalProjects(Iterable<ApiProject> projects) =>
-    projects.where((p) => p.isPersonal).toList()..sort(_byPosition);
+    projects.where((p) => p.isPersonal).toList();
 
-/// Client projects (linked to an experience), by `position`.
+/// Client projects (linked to an experience), in response order.
 List<ApiProject> clientProjects(Iterable<ApiProject> projects) =>
-    projects.where((p) => !p.isPersonal).toList()..sort(_byPosition);
+    projects.where((p) => !p.isPersonal).toList();
+
+/// Skill categories that have at least one skill, in response order.
+List<SkillCategory> nonEmptyCategories(Iterable<SkillCategory> categories) =>
+    categories.where((c) => c.skills.isNotEmpty).toList();
 
 /// Client projects of one experience.
 class ProjectGroup {
@@ -31,8 +36,8 @@ class ProjectGroup {
   final List<ApiProject> projects;
 }
 
-/// Client projects grouped by experience. Groups follow the position of their
-/// first project, and projects keep their `position` order inside a group.
+/// Client projects grouped by experience. Groups follow their first project in
+/// the response, and projects keep the response order inside a group.
 List<ProjectGroup> clientProjectGroups(
   Iterable<ApiProject> projects,
   Iterable<ApiExperience> experiences,
@@ -59,14 +64,4 @@ List<ApiProject> linkedProjects(
 ) {
   final byId = {for (final p in projects) p.id: p};
   return [for (final id in experience.projectIds) ?byId[id]];
-}
-
-/// Skills sorted by recency (`top` first), keeping the API order otherwise.
-List<Skill> sortedSkills(Iterable<Skill> skills) {
-  final indexed = skills.indexed.toList()
-    ..sort((a, b) {
-      final byLevel = a.$2.level.index.compareTo(b.$2.level.index);
-      return byLevel != 0 ? byLevel : a.$1.compareTo(b.$1);
-    });
-  return [for (final (_, skill) in indexed) skill];
 }

@@ -119,10 +119,13 @@ class _ProfileContent extends StatelessWidget {
               ],
             ),
           ),
-        if (skills.categories.isNotEmpty)
+        // Categories are edited on the website: any number, any code, in the
+        // received order. Empty ones are hidden.
+        if (nonEmptyCategories(skills.categories) case final categories
+            when categories.isNotEmpty)
           Section(
             label: l10n.sectionSkills,
-            child: _Skills(categories: skills.categories),
+            child: _Skills(categories: categories),
           ),
         if (certificates.isNotEmpty)
           Section(
@@ -324,7 +327,8 @@ class _Skills extends StatelessWidget {
                   spacing: 6,
                   runSpacing: 6,
                   children: [
-                    for (final skill in sortedSkills(category.skills))
+                    // API order, as on the website's CV.
+                    for (final skill in category.skills)
                       _SkillChip(skill: skill),
                   ],
                 ),

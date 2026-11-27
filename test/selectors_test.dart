@@ -26,25 +26,26 @@ void main() {
     expect(sorted.map((e) => e.id), ['new', 'mid', 'old']);
   });
 
-  test('personal and client projects are split and sorted by position', () {
+  test('personal and client projects are split, keeping response order', () {
+    // The API sorts by position; the app must not re-sort.
     final all = [
-      project('c2', exp: 'a', position: 2),
-      project('p2', position: 2),
-      project('c1', exp: 'a', position: 1),
-      project('p1', position: 1),
+      project('c1', exp: 'a', position: 9),
+      project('p1', position: 2),
+      project('c2', exp: 'a', position: 1),
+      project('p2', position: 1),
     ];
     expect(personalProjects(all).map((p) => p.id), ['p1', 'p2']);
     expect(clientProjects(all).map((p) => p.id), ['c1', 'c2']);
   });
 
-  test('client groups follow the first position of each experience', () {
+  test('client groups follow the response order', () {
     final groups = clientProjectGroups(
       [
-        project('w1', exp: 'work', position: 3),
-        project('s1', exp: 'school', position: 5),
-        project('i1', exp: 'iomedia', position: 1),
-        project('i2', exp: 'iomedia', position: 2),
-        project('w2', exp: 'work', position: 4),
+        project('i1', exp: 'iomedia'),
+        project('w1', exp: 'work'),
+        project('i2', exp: 'iomedia'),
+        project('s1', exp: 'school'),
+        project('w2', exp: 'work'),
       ],
       [experience('iomedia', DateTime(2021)), experience('work', DateTime(2020))],
     );
@@ -53,19 +54,22 @@ void main() {
     expect(groups.last.experience, isNull);
   });
 
+  test('empty skill categories are dropped, others keep their order', () {
+    final categories = nonEmptyCategories(const [
+      SkillCategory(code: 'tools', name: 'Outils', skills: [
+        Skill(name: 'Git', level: SkillLevel.mid),
+      ]),
+      SkillCategory(code: 'librairies', name: 'Librairies'),
+      SkillCategory(code: 'zz-new', name: 'Nouvelle', skills: [
+        Skill(name: 'Dart', level: SkillLevel.top),
+      ]),
+    ]);
+    expect(categories.map((c) => c.code), ['tools', 'zz-new']);
+  });
+
   test('linked projects keep the experience order and skip unknown ids', () {
     final e = experience('x', DateTime(2021), projectIds: ['b', 'missing', 'a']);
     final linked = linkedProjects(e, [project('a'), project('b')]);
     expect(linked.map((p) => p.id), ['b', 'a']);
-  });
-
-  test('skills sorted top, mid, bottom; stable otherwise', () {
-    final sorted = sortedSkills(const [
-      Skill(name: 'b1', level: SkillLevel.bottom),
-      Skill(name: 'm1', level: SkillLevel.mid),
-      Skill(name: 't1', level: SkillLevel.top),
-      Skill(name: 'm2', level: SkillLevel.mid),
-    ]);
-    expect(sorted.map((s) => s.name), ['t1', 'm1', 'm2', 'b1']);
   });
 }

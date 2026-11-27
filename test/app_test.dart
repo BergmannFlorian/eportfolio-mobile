@@ -67,6 +67,61 @@ void main() {
     expect(find.text('IOMEDIA SA'), findsOneWidget);
   });
 
+  testWidgets('profile shows dynamic skill categories in received order', (
+    tester,
+  ) async {
+    stubFixtures(api);
+    // Five categories: an unknown code, an empty one, and a new order.
+    when(() => api.get('/skills', lang: any(named: 'lang'))).thenAnswer(
+      (_) async => <String, Object?>{
+        'stack': ['Dart'],
+        'categories': [
+          {
+            'code': 'frameworks',
+            'name': 'Cadriciels',
+            'skills': [
+              {'name': 'Flutter', 'level': 'top', 'personalOnly': true},
+            ],
+          },
+          {'code': 'librairies', 'name': 'Catégorie vide', 'skills': <Object?>[]},
+          {
+            'code': 'langs',
+            'name': 'Langages',
+            'skills': [
+              {'name': 'Dart', 'level': 'mid', 'personalOnly': false},
+            ],
+          },
+          {
+            'code': 'something-new',
+            'name': 'Méthodes',
+            'skills': [
+              {'name': 'Scrum', 'level': 'bottom', 'personalOnly': false},
+            ],
+          },
+          {
+            'code': 'tools',
+            'name': 'Outils',
+            'skills': [
+              {'name': 'Git', 'level': 'mid', 'personalOnly': false},
+            ],
+          },
+        ],
+      },
+    );
+    await pumpApp(tester);
+    await load(tester);
+    await tester.tap(find.text('Profil'));
+    await load(tester);
+
+    final list = find.byType(Scrollable).first;
+    await tester.scrollUntilVisible(find.text('Outils'), 300, scrollable: list);
+    double top(String text) => tester.getTopLeft(find.text(text)).dy;
+    expect(top('Cadriciels'), lessThan(top('Langages')));
+    expect(top('Langages'), lessThan(top('Méthodes')));
+    expect(top('Méthodes'), lessThan(top('Outils')));
+    expect(find.text('Catégorie vide'), findsNothing);
+  });
+
   testWidgets('offline without cache shows the error and retries', (tester) async {
     when(
       () => api.get(any(), lang: any(named: 'lang')),
